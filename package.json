@@ -11,7 +11,7 @@
     "pod:install": "npm run pod:clean && cd ios && pod install && cd ../",
     "pod:clean": "cd ios && pod cache clean --all && cd ../",
     "pod:remove:all": "rm -rf ./ios/Pods/",
-    "open:xcode": "open ios/hit.xcworkspace",
+    "open:xcode": "open ios/rnCarmeleon.xcworkspace",
     "open:android": "open -a /Applications/Android\\ Studio.app ./android",
     "open:avd": "emulator -avd Pixel_5_API_32 -wipe-data",
     "avd:list": "emulator -list-avds",
@@ -20,8 +20,10 @@
     "format": "prettier --check ./src"
   },
   "dependencies": {
+    "@sentry/react-native": "^3.4.2",
     "react": "17.0.2",
-    "react-native": "0.68.2"
+    "react-native": "0.68.2",
+    "react-native-reanimated": "^2.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
