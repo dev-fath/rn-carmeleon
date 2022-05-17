@@ -54,7 +54,6 @@ const AppLayout = () => {
           <RootStack.Screen name="Home" component={MainComponent} />
           <RootStack.Screen name="Menu" component={MenuComponent} initialParams={{ userId: 'user.id' }} />
         </RootStack.Navigator>
-        <MainComponent />
       </NavigationContainer>
     </SafeAreaView>
   );
