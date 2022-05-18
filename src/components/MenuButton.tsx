@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { DefaultScreenNavigationProp } from 'interfaces/navigation';
 

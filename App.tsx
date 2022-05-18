@@ -9,15 +9,13 @@
  */
 
 import React, { ComponentType } from 'react';
-import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
 import * as Sentry from '@sentry/react-native';
 import codePush from 'react-native-code-push';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import MainComponent from 'page/Main';
 import MenuComponent from 'page/Menu';
-import MenuButton from 'components/MenuButton';
 import { RootStackParamList } from 'interfaces/navigation';
 
 Sentry.init({
@@ -41,21 +39,16 @@ const codePushOptions: { [index: string]: unknown } = {
   // 업데이트를 어떻게 설치할 것인지 (IMMEDIATE는 강제설치를 의미)
 };
 
-const RootStack = createStackNavigator<RootStackParamList>();
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const AppLayout = () => {
-  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <SafeAreaView>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NavigationContainer>
-        <MenuButton />
-        <RootStack.Navigator initialRouteName="Home">
-          <RootStack.Screen name="Home" component={MainComponent} />
-          <RootStack.Screen name="Menu" component={MenuComponent} initialParams={{ userId: 'user.id' }} />
-        </RootStack.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+    <NavigationContainer>
+      <RootStack.Navigator initialRouteName={'Home'}>
+        <RootStack.Screen name="Home" component={MainComponent} options={{ headerShown: false }} />
+        <RootStack.Screen name="Menu" component={MenuComponent} initialParams={{ userId: 'user.id' }} />
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
 };
 
