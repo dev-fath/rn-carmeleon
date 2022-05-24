@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "npm run pod:install && react-native run-ios --simulator \"iPhone 13 mini\"",
+    "ios": "npm run pod:install && react-native run-ios",
+    "ios:mini": "npm run pod:install && react-native run-ios --simulator \"iPhone 13 mini\"",
     "build:ios": "npm run pod:install",
     "build:android": "npm run gradle:clean && npm run gradle:install",
     "start": "react-native start",
