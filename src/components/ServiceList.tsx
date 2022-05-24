@@ -2,18 +2,20 @@ import React from 'react';
 
 import { View } from 'react-native';
 import Chip from './Chip';
+import { ColorTheme } from '../../assets/colorCodes';
+import { ServiceItemInterface } from '../interfaces/serviceItem';
 
 const ServiceList = () => {
-  const serviceList = [
-    { iconName: 'P', name: '주차장' },
-    { iconName: 'P', name: '충전소' },
-    { iconName: 'P', name: '주유소' },
-    { iconName: 'P', name: '세차장' },
+  const serviceList: ServiceItemInterface[] = [
+    { iconName: 'P', name: '주차장', color: ColorTheme.Main },
+    { iconName: 'P', name: '충전소', color: ColorTheme.Charger },
+    { iconName: 'P', name: '주유소', color: ColorTheme.GasStation },
+    { iconName: 'P', name: '세차장', color: ColorTheme.CarWash },
   ];
   return (
     <View style={{ display: 'flex', flexDirection: 'row', marginLeft: 16 }}>
       {serviceList.map(service => {
-        return <Chip key={service.name} iconName={service.iconName} chipName={service.name} />;
+        return <Chip key={service.name} {...service} />;
       })}
     </View>
   );

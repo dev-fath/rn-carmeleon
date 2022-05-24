@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { Text, View } from 'react-native';
+import { ServiceItemInterface } from '../interfaces/serviceItem';
 
-const Chip = ({ iconName, chipName }: { iconName: string; chipName: string }) => {
+const Chip = (chipProps: ServiceItemInterface) => {
   return (
     <View
       style={{
@@ -14,10 +15,11 @@ const Chip = ({ iconName, chipName }: { iconName: string; chipName: string }) =>
         borderStyle: 'solid',
         borderWidth: 1,
         borderRadius: 4,
+        borderColor: chipProps.color,
       }}
     >
-      <Text>{iconName}</Text>
-      <Text>{chipName}</Text>
+      <Text>{chipProps.iconName}</Text>
+      <Text>{chipProps.name}</Text>
     </View>
   );
 };
