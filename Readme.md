@@ -13,7 +13,7 @@ source ~/.zshrc
 # 실행방법
 1. yarn install
 2. npm run pod:install (ios만)
-3. 안드로이드스튜디오 실행, AVD 열기(안드로이드)
+3. 안드로이드스튜디오 실행, AVD 열기(안드로이드만)
 4. npm run android/ios
 
 # 기술스택
