@@ -42,8 +42,8 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 const AppLayout = () => {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={'Home'}>
-        <RootStack.Screen name="Home" component={MainComponent} options={{ headerShown: false }} />
+      <RootStack.Navigator initialRouteName={'Home'} screenOptions={{ headerShown: false }}>
+        <RootStack.Screen name="Home" component={MainComponent} />
         <RootStack.Screen name="Menu" component={MenuComponent} initialParams={{ userId: 'user.id' }} />
       </RootStack.Navigator>
     </NavigationContainer>
