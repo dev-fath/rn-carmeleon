@@ -2,11 +2,13 @@ import React from 'react';
 
 import { Text, View } from 'react-native';
 import { ServiceItemInterface } from '../interfaces/serviceItem';
+import { ColorTheme } from '../../assets/colorCodes';
 
 const Chip = (chipProps: ServiceItemInterface) => {
   return (
     <View
       style={{
+        backgroundColor: ColorTheme.white,
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'nowrap',

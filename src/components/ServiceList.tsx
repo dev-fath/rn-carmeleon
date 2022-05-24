@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import Chip from './Chip';
 import { ColorTheme } from '../../assets/colorCodes';
 import { ServiceItemInterface } from '../interfaces/serviceItem';
@@ -13,11 +13,13 @@ const ServiceList = () => {
     { iconName: 'P', name: '세차장', color: ColorTheme.CarWash },
   ];
   return (
-    <View style={{ display: 'flex', flexDirection: 'row', marginLeft: 16 }}>
-      {serviceList.map(service => {
-        return <Chip key={service.name} {...service} />;
-      })}
-    </View>
+    <SafeAreaView style={{ position: 'absolute', marginTop: 72, zIndex: 1 }}>
+      <View style={{ display: 'flex', flexDirection: 'row', marginLeft: 16 }}>
+        {serviceList.map(service => {
+          return <Chip key={service.name} {...service} />;
+        })}
+      </View>
+    </SafeAreaView>
   );
 };
 
