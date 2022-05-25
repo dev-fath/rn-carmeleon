@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-const axiosConfig: AxiosRequestConfig<unknown> = { baseURL: 'http://localhost:3000' };
+const axiosConfig: AxiosRequestConfig<unknown> = { baseURL: 'https://api.carmeleon.co.kr/api/' };
 const axiosClient = axios.create(axiosConfig);
 
 axiosClient.interceptors.response.use(res => {
@@ -8,6 +8,9 @@ axiosClient.interceptors.response.use(res => {
 });
 
 axiosClient.interceptors.request.use(req => {
+  if (req.headers) {
+    req.headers.ak = 'development';
+  }
   return req;
 });
 

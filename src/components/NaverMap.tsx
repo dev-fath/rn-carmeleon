@@ -1,38 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import NaverMapView, { Circle, Marker, Path, Polygon, Polyline } from 'react-native-nmap/index';
+import NaverMapView, { Align, Marker } from 'react-native-nmap/index';
+import axiosClient from '../api/interceptor';
 
 const NaverMap = () => {
-  const P0 = { latitude: 37.564362, longitude: 126.977011 };
-  const P1 = { latitude: 37.565051, longitude: 126.978567 };
-  const P2 = { latitude: 37.565383, longitude: 126.976292 };
+  const [pin, setPin] = useState([]);
+  const [area, setArea] = useState({ minLat: 0, maxLat: 0, minLon: 0, maxLon: 0 });
+  useEffect(() => {
+    axiosClient
+      .get<[]>('parkings')
+      .then(a => {
+        setPin(a.data);
+      })
+      .catch(e => {
+        console.warn(e);
+      });
+  }, []);
   const centerPoint = { latitude: 37.378595, longitude: 127.112724 };
-
   return (
     <NaverMapView
       style={{ width: '100%', height: '100%' }}
       showsMyLocationButton={true}
       center={{ ...centerPoint, zoom: 15 }}
-      // onTouch={e => console.warn('onTouch', JSON.stringify(e.nativeEvent))}
-      onCameraChange={e => console.warn('onCameraChange', JSON.stringify(e))}
+      onCameraChange={e => {
+        setArea({
+          minLat: e.coveringRegion[0].latitude,
+          maxLat: e.coveringRegion[2].latitude,
+          minLon: e.coveringRegion[0].longitude,
+          maxLon: e.coveringRegion[2].longitude,
+        });
+        console.log('onCameraChange', e.coveringRegion);
+      }}
       onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
     >
-      <Marker coordinate={P0} onClick={() => console.warn('onClick! p0')} />
-      <Marker coordinate={P1} pinColor="blue" onClick={() => console.warn('onClick! p1')} />
-      <Marker coordinate={P2} pinColor="red" onClick={() => console.warn('onClick! p2')} />
-      <Path coordinates={[P0, P1]} onClick={() => console.warn('onClick! path')} width={10} />
-      <Polyline coordinates={[P1, P2]} onClick={() => console.warn('onClick! polyline')} />
-      <Circle
-        coordinate={P0}
-        color={'rgba(255,0,0,0.3)'}
-        radius={200}
-        onClick={() => console.warn('onClick! circle')}
-      />
-      <Polygon
-        coordinates={[P0, P1, P2]}
-        color={'rgba(0, 0, 0, 0.5)'}
-        onClick={() => console.warn('onClick! polygon')}
-      />
+      {pin
+        .filter(
+          p => p['lat'] > area.minLat && p['lat'] < area.maxLat && p['lon'] > area.minLon && p['lon'] < area.maxLon,
+        )
+        .map((p, i) => (
+          <Marker
+            key={i}
+            coordinate={{ latitude: p['lat'], longitude: p['lon'] }}
+            caption={{
+              text: `${p['price'] / 1000}천원`,
+              align: Align.Center,
+              textSize: 12,
+              maxZoom: 24,
+              minZoom: 0,
+              color: '#000',
+            }}
+          />
+        ))}
     </NaverMapView>
   );
 };
