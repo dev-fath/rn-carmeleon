@@ -15,8 +15,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import MainComponent from 'page/Main';
-import MenuComponent from 'page/Menu';
 import { RootStackParamList } from 'interfaces/navigation';
+import MenuStackNavigator from './src/navigator/MenuStackNavigator';
 
 Sentry.init({
   dsn: 'https://12655d0c152e4b9e9a849a99de3b3bb0@o1243005.ingest.sentry.io/6397948',
@@ -42,9 +42,9 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 const AppLayout = () => {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName={'Home'}>
-        <RootStack.Screen name="Home" component={MainComponent} options={{ headerShown: false }} />
-        <RootStack.Screen name="Menu" component={MenuComponent} initialParams={{ userId: 'user.id' }} />
+      <RootStack.Navigator initialRouteName={'Home'} screenOptions={{ headerShown: false }}>
+        <RootStack.Screen name="Home" component={MainComponent} />
+        <RootStack.Screen name="Menu" component={MenuStackNavigator} options={{ animation: 'slide_from_left' }} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
