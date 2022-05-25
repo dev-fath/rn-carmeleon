@@ -1,13 +1,24 @@
 import React from 'react';
 
-import { Text, View } from 'react-native';
+import { Text, TouchableWithoutFeedback, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { MenuScreenNavigationProp } from '../../interfaces/navigation';
+import { MenuItemInterface } from '../../interfaces/menuItem';
 
-const MenuItem = ({ icon, name }: { icon: string; name: string }) => {
+const MenuItem = ({ icon, name, title }: MenuItemInterface) => {
+  const menuNavigation: MenuScreenNavigationProp = useNavigation();
   return (
-    <View style={{ width: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-      <Text>{icon}</Text>
-      <Text>{name}</Text>
-    </View>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        menuNavigation.navigate(name);
+        console.warn(title);
+      }}
+    >
+      <View style={{ width: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'center', padding: 16 }}>
+        <Text>{icon}</Text>
+        <Text>{name}</Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
