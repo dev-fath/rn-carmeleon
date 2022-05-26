@@ -17,6 +17,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainComponent from 'page/Main';
 import { RootStackParamList } from 'interfaces/navigation';
 import MenuStackNavigator from './src/navigator/MenuStackNavigator';
+import { Provider } from 'react-redux';
+import { carmeleonStore } from './src/redux/store';
 
 Sentry.init({
   dsn: 'https://12655d0c152e4b9e9a849a99de3b3bb0@o1243005.ingest.sentry.io/6397948',
@@ -41,12 +43,14 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const AppLayout = () => {
   return (
-    <NavigationContainer>
-      <RootStack.Navigator initialRouteName={'Home'} screenOptions={{ headerShown: false }}>
-        <RootStack.Screen name="Home" component={MainComponent} />
-        <RootStack.Screen name="Menu" component={MenuStackNavigator} options={{ animation: 'slide_from_left' }} />
-      </RootStack.Navigator>
-    </NavigationContainer>
+    <Provider store={carmeleonStore}>
+      <NavigationContainer>
+        <RootStack.Navigator initialRouteName={'Home'} screenOptions={{ headerShown: false }}>
+          <RootStack.Screen name="Home" component={MainComponent} />
+          <RootStack.Screen name="Menu" component={MenuStackNavigator} options={{ animation: 'slide_from_left' }} />
+        </RootStack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
