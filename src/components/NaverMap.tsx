@@ -2,15 +2,52 @@ import React, { useEffect, useState } from 'react';
 
 import NaverMapView, { Align, Marker } from 'react-native-nmap/index';
 import axiosClient from '../api/interceptor';
+import { useDispatch, useSelector } from 'react-redux';
+import { carmeleonDispatch, carmeleonState } from '../redux/store';
+import { carWashSpots, chargingSpots, gasStations, parkingSites, ServiceEnum } from '../redux/slice';
+import { MarkerPointInterface } from '../interfaces/marker';
 
+const targetUrlSetter = (selectedService: ServiceEnum) => {
+  switch (true) {
+    case selectedService === ServiceEnum.parkingSite:
+      return 'parkings';
+    case selectedService === ServiceEnum.carWashSpot:
+      return 'carWashes';
+    case selectedService === ServiceEnum.chargingSpot:
+      return 'evChargeStations';
+    case selectedService === ServiceEnum.gasStation:
+      return 'gasStations';
+    default:
+      return 'parkings';
+  }
+};
+
+const dispatchTarget = (selectedService: ServiceEnum) => {
+  switch (true) {
+    case selectedService === ServiceEnum.parkingSite:
+      return parkingSites;
+    case selectedService === ServiceEnum.carWashSpot:
+      return carWashSpots;
+    case selectedService === ServiceEnum.chargingSpot:
+      return chargingSpots;
+    case selectedService === ServiceEnum.gasStation:
+      return gasStations;
+    default:
+      return parkingSites;
+  }
+};
 const NaverMap = () => {
-  const [pin, setPin] = useState([]);
   const [area, setArea] = useState({ minLat: 0, maxLat: 0, minLon: 0, maxLon: 0 });
+  const selectedService = useSelector((state: carmeleonState) => state.selectedService);
+  const parkingSiteList = useSelector((state: carmeleonState) => state.parkingSites);
+  const dispatch = useDispatch<carmeleonDispatch>();
+  const targetUrl = targetUrlSetter(selectedService);
+
   useEffect(() => {
     axiosClient
-      .get<[]>('parkings')
-      .then(a => {
-        setPin(a.data);
+      .get<MarkerPointInterface[]>(targetUrl)
+      .then(markerPoints => {
+        dispatch(dispatchTarget(selectedService)(markerPoints.data));
       })
       .catch(e => {
         console.warn(e);
@@ -33,7 +70,7 @@ const NaverMap = () => {
       }}
       onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
     >
-      {pin
+      {parkingSiteList
         .filter(
           p => p['lat'] > area.minLat && p['lat'] < area.maxLat && p['lon'] > area.minLon && p['lon'] < area.maxLon,
         )
