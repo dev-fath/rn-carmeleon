@@ -37,7 +37,6 @@ const dispatchTarget = (selectedService: ServiceEnum) => {
   }
 };
 const NaverMap = () => {
-  const [pin, setPin] = useState<MarkerPointInterface[]>([]);
   const [area, setArea] = useState({ minLat: 0, maxLat: 0, minLon: 0, maxLon: 0 });
   const selectedService = useSelector((state: carmeleonState) => state.selectedService);
   const parkingSiteList = useSelector((state: carmeleonState) => state.parkingSites);
@@ -49,15 +48,11 @@ const NaverMap = () => {
       .get<MarkerPointInterface[]>(targetUrl)
       .then(markerPoints => {
         dispatch(dispatchTarget(selectedService)(markerPoints.data));
-        setPin(markerPoints.data);
       })
       .catch(e => {
         console.warn(e);
       });
   }, []);
-  setTimeout(() => {
-    console.log(parkingSiteList);
-  }, 1000);
   const centerPoint = { latitude: 37.378595, longitude: 127.112724 };
   return (
     <NaverMapView
@@ -75,7 +70,7 @@ const NaverMap = () => {
       }}
       onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
     >
-      {pin
+      {parkingSiteList
         .filter(
           p => p['lat'] > area.minLat && p['lat'] < area.maxLat && p['lon'] > area.minLon && p['lon'] < area.maxLon,
         )

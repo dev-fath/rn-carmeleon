@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Coord } from 'react-native-nmap';
+import { MarkerPointInterface } from '../interfaces/marker';
 
 export const enum ServiceEnum {
   parkingSite = 'parking site',
@@ -29,7 +30,7 @@ export const carmeleonSlice = createSlice({
     gasStations: (state, action: PayloadAction<unknown[]>) => {
       state.gasStations = action.payload;
     },
-    parkingSites: (state, action: PayloadAction<unknown[]>) => {
+    parkingSites: (state, action: PayloadAction<MarkerPointInterface[]>) => {
       state.parkingSites = action.payload;
     },
     centerPoint: (state, action: PayloadAction<Coord>) => {
@@ -44,7 +45,7 @@ export type carmeleonReducers = ReturnType<typeof carmeleonSlice.reducer>;
 export default carmeleonSlice.reducer;
 
 interface InitialStateInterface {
-  parkingSites: unknown[];
+  parkingSites: MarkerPointInterface[];
   chargingSpots: unknown[];
   carWashSpots: unknown[];
   gasStations: unknown[];
