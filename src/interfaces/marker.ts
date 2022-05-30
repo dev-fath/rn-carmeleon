@@ -41,3 +41,10 @@ export interface CarWashMarkerInterface extends MarkerPointInterface {
   timeTag?: string[];
   typeTag?: string[];
 }
+
+export interface AreaInterface {
+  minLat: number;
+  maxLat: number;
+  minLon: number;
+  maxLon: number;
+}
