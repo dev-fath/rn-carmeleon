@@ -14,6 +14,13 @@ export const enum ServiceEnum {
   gasStation = 'gas station',
 }
 
+export const enum FuelEnum {
+  gasoline = 'Gasoline',
+  premiumGasoline = 'PremiumGasoline',
+  diesel = 'Diesel',
+  lpg = 'lpg',
+}
+
 const initialState: InitialStateInterface = {
   carWashSpots: [],
   chargingSpots: [],
@@ -21,6 +28,7 @@ const initialState: InitialStateInterface = {
   parkingSites: [],
   centerPoint: { latitude: 37.378595, longitude: 127.112724 },
   selectedService: ServiceEnum.parkingSite,
+  selectedFuel: FuelEnum.gasoline,
 };
 export const carmeleonSlice = createSlice({
   name: 'carmeleonSlice',
@@ -44,10 +52,13 @@ export const carmeleonSlice = createSlice({
     selectedService: (state, action: PayloadAction<ServiceEnum>) => {
       state.selectedService = action.payload;
     },
+    selectedFuel: (state, action: PayloadAction<FuelEnum>) => {
+      state.selectedFuel = action.payload;
+    },
   },
 });
 
-export const { carWashSpots, chargingSpots, gasStations, parkingSites, centerPoint, selectedService } =
+export const { carWashSpots, chargingSpots, gasStations, parkingSites, centerPoint, selectedService, selectedFuel } =
   carmeleonSlice.actions;
 
 export type carmeleonReducers = ReturnType<typeof carmeleonSlice.reducer>;
@@ -60,4 +71,5 @@ interface InitialStateInterface {
   gasStations: GasStationMarkerInterface[];
   centerPoint: Coord;
   selectedService: ServiceEnum;
+  selectedFuel: FuelEnum;
 }

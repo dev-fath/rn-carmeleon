@@ -22,7 +22,7 @@ export interface EvChargerMarkerInterface extends MarkerPointInterface {
   availableStall?: unknown;
   updateTime?: unknown;
   stall?: unknown;
-  evChargers?: [stat: number];
+  evChargers?: { stat: number }[];
 }
 
 export interface GasStationMarkerInterface extends MarkerPointInterface {
@@ -30,7 +30,7 @@ export interface GasStationMarkerInterface extends MarkerPointInterface {
   brandCode?: string;
   Gasoline?: number | null;
   Diesel?: number | null;
-  PremiumGasoline?: unknown;
+  PremiumGasoline?: number | null;
   lpg?: number | null;
 }
 
