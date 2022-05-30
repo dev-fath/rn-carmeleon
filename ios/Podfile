@@ -20,6 +20,8 @@ target 'rnCarmeleon' do
   )
 
   pod 'RNSentry', :path => '../node_modules/@sentry/react-native'
+  pod 'NMapsMap','3.15.0'
+  permissions_path = '../node_modules/react-native-permissions/ios'
 
   target 'rnCarmeleonTests' do
     inherit! :complete
