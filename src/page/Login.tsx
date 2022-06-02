@@ -1,10 +1,19 @@
 import React from 'react';
 
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
+import { ColorTheme, OtherServiceColorTheme } from '../../assets/colorCodes';
+import { LoginMethodInterface } from '../interfaces/login';
+import LoginButton from '../components/login/LoginButton';
 
 const LoginPage = () => {
+  const loginMethod: LoginMethodInterface[] = [
+    { code: 'kakao', name: '카카오', backgroundColor: OtherServiceColorTheme.KakaoYellow },
+    { code: 'naver', name: '네이버', backgroundColor: OtherServiceColorTheme.NaverGreen },
+    { code: 'apple', name: '애플', backgroundColor: OtherServiceColorTheme.AppleBlack, fontColor: ColorTheme.white },
+    { code: 'google', name: '구글', backgroundColor: OtherServiceColorTheme.GoogleWhite },
+  ];
   return (
     <SafeAreaView>
       <LinearGradient
@@ -20,24 +29,28 @@ const LoginPage = () => {
         end={{ x: 1, y: 2.25 }}
       >
         <BackButton />
-        <View>
-          <Text>첫 로그인 접속하시면</Text>
-          <Text>100 포인트.</Text>
+        <View style={{ marginLeft: 32 }}>
+          <Text style={{ color: ColorTheme.white, fontSize: 20 }}>첫 로그인 접속하시면</Text>
+          <Text style={{ color: ColorTheme.white, fontSize: 20, fontWeight: 'bold' }}>100 포인트.</Text>
         </View>
-        <View>
-          <Text style={{ textAlign: 'center' }}>간편하게 시작해볼까요 :)</Text>
-          <TouchableOpacity style={{ alignItems: 'center' }}>
-            <Text>네이버로 계속하기</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ alignItems: 'center' }}>
-            <Text>카카오로 계속하기</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ alignItems: 'center' }}>
-            <Text>Apple로 계속하기</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ alignItems: 'center' }}>
-            <Text>Google로 계속하기</Text>
-          </TouchableOpacity>
+        <View style={{ display: 'flex', alignItems: 'center' }}>
+          <Text style={{ textAlign: 'center', color: ColorTheme.white, fontSize: 12, marginBottom: 16 }}>
+            간편하게 시작해볼까요 :)
+          </Text>
+          {loginMethod.map(method => {
+            return (
+              <LoginButton
+                key={method.code}
+                name={method.name}
+                code={method.code}
+                backgroundColor={method.backgroundColor}
+                fontColor={method.fontColor}
+              />
+            );
+          })}
+          <Text style={{ fontSize: 10, color: ColorTheme.white }}>
+            회원가입 시 서비스 이용약관과 개인정보 보호정책에 동의하게 됩니다
+          </Text>
         </View>
         <View>
           <Text>로고</Text>
