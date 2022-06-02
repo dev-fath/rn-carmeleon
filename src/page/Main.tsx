@@ -36,7 +36,7 @@ const MainComponent = () => {
           console.log(e);
         });
     });
-  });
+  }, []);
   return (
     <View>
       <TitleBar />
