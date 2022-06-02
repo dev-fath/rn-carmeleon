@@ -4,25 +4,26 @@ import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MenuScreenNavigationProp } from '../../interfaces/navigation';
 import { MenuItemInterface } from '../../interfaces/menuItem';
+import { useSelector } from 'react-redux';
+import { carmeleonState } from '../../redux/store';
 
 const MenuItem = ({ icon, name, title, needAuth, modalVisible = false, setModalVisible }: MenuItemInterface) => {
   const menuNavigation: MenuScreenNavigationProp = useNavigation();
+  const isAuthenticated = useSelector((state: carmeleonState) => state.isAuthenticated);
 
   function navigateOnPress() {
+    console.warn(title);
     if (needAuth) {
-      //TODO : 로그인 여부 불러오기
-      const isAuth = false;
-      if (isAuth) {
+      if (isAuthenticated) {
         menuNavigation.navigate(name);
-      } else {
-        if (setModalVisible) {
-          setModalVisible(!modalVisible);
-        }
+        return;
+      }
+      if (setModalVisible) {
+        setModalVisible(!modalVisible);
       }
       return;
     }
     menuNavigation.navigate(name);
-    console.warn(title);
   }
 
   return (
