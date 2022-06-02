@@ -1,13 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React, { ComponentType } from 'react';
 import * as Sentry from '@sentry/react-native';
 import codePush from 'react-native-code-push';
@@ -20,6 +10,7 @@ import MenuStackNavigator from './src/navigator/MenuStackNavigator';
 import { Provider } from 'react-redux';
 import { carmeleonStore } from './src/redux/store';
 import LoginPage from './src/page/Login';
+import PaymentMethods from './src/page/menus/PaymentMethods';
 
 Sentry.init({
   dsn: 'https://12655d0c152e4b9e9a849a99de3b3bb0@o1243005.ingest.sentry.io/6397948',
@@ -50,6 +41,7 @@ const AppLayout = () => {
           <RootStack.Screen name="Home" component={MainComponent} />
           <RootStack.Screen name="Menu" component={MenuStackNavigator} options={{ animation: 'slide_from_left' }} />
           <RootStack.Screen name="Login" component={LoginPage} options={{ animation: 'slide_from_right' }} />
+          <RootStack.Screen name="AutoPay" component={PaymentMethods} options={{ animation: 'slide_from_right' }} />
         </RootStack.Navigator>
       </NavigationContainer>
     </Provider>
