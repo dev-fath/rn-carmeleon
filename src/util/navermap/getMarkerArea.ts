@@ -29,21 +29,42 @@ const markerPoint4 = (viewArea: AreaInterface): AreaInterface[] => {
     }, // 4 사분면(우하단)
   ];
 };
-// const markerPoint8 = () => {
-//   // 줌레벨 13~12
-//   return [];
-// };
-// const markerPoint16 = () => {
-//   // 줌레벨 11~10
-//   return [];
-// };
+const markerPoint8 = (viewArea: AreaInterface): AreaInterface[] => {
+  const area4Array = markerPoint4(viewArea);
+  const [areaA, areaB, areaC, areaD] = area4Array.map(area => {
+    return [
+      {
+        minLat: (area.minLat + area.maxLat) / 2,
+        maxLat: area.maxLat,
+        minLon: area.minLon,
+        maxLon: area.maxLon,
+      }, // 2 사분면(좌상단)
+      {
+        minLat: area.minLat,
+        maxLat: (area.minLat + area.maxLat) / 2,
+        minLon: area.minLon,
+        maxLon: area.maxLon,
+      }, // 2 사분면(좌상단)
+    ];
+  });
+  // 줌레벨 13~12
+  return [...areaA, ...areaB, ...areaC, ...areaD];
+};
+const markerPoint16 = (viewArea: AreaInterface): AreaInterface[] => {
+  // 줌레벨 11~10
+  const area4Array = markerPoint4(viewArea);
+  const [areaA, areaB, areaC, areaD] = area4Array.map(area => {
+    return markerPoint4(area);
+  });
+  return [...areaA, ...areaB, ...areaC, ...areaD];
+};
 
 export const setMarkerArea = (zoomLevel: number, viewArea: AreaInterface) => {
   if (zoomLevel < 12) {
-    return markerPoint4(viewArea);
+    return markerPoint16(viewArea);
   }
   if (zoomLevel < 14) {
-    return markerPoint4(viewArea);
+    return markerPoint8(viewArea);
   }
   return markerPoint4(viewArea);
 };
