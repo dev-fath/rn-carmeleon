@@ -60,10 +60,10 @@ const markerPoint16 = (viewArea: AreaInterface): AreaInterface[] => {
 };
 
 export const setMarkerArea = (zoomLevel: number, viewArea: AreaInterface) => {
-  if (zoomLevel < 12) {
+  if (zoomLevel < 11) {
     return markerPoint16(viewArea);
   }
-  if (zoomLevel < 14) {
+  if (zoomLevel < 13) {
     return markerPoint8(viewArea);
   }
   return markerPoint4(viewArea);

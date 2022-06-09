@@ -12,7 +12,7 @@ const NaverMap = () => {
   const [centerPoint, setCenterPoint] = useState<Coord>({ latitude: 37.378595, longitude: 127.112724 });
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
-  const [zoomLevel, setZoomLevel] = useState(16);
+  const [zoomLevel, setZoomLevel] = useState(15);
 
   return (
     <NaverMapView
