@@ -21,8 +21,6 @@ const NaverMap = () => {
       center={{ ...centerPoint, zoom: zoomLevel }}
       minZoomLevel={10}
       onCameraChange={e => {
-        console.log(e, e.zoom);
-        // setCenterPoint({ latitude: e.latitude, longitude: e.longitude });
         setArea({
           minLat: e.coveringRegion[0].latitude,
           maxLat: e.coveringRegion[2].latitude,
