@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
-import { Align, Marker } from 'react-native-nmap';
+import { Align, Coord, Marker } from 'react-native-nmap';
 import { useSelector } from 'react-redux';
 import { carmeleonState } from '../redux/store';
 import { FuelEnum, ServiceEnum } from '../redux/slice';
@@ -13,7 +13,17 @@ import {
 } from '../interfaces/marker';
 import { ColorTheme } from '../../assets/colorCodes';
 
-const MapMarker = ({ area }: { area: AreaInterface }) => {
+const MapMarker = ({
+  area,
+  zoomLevel,
+  setZoomLevel,
+  setCenterPoint,
+}: {
+  area: AreaInterface;
+  zoomLevel: number;
+  setZoomLevel: Dispatch<SetStateAction<number>>;
+  setCenterPoint: Dispatch<SetStateAction<Coord>>;
+}) => {
   const selectedService = useSelector((state: carmeleonState) => state.selectedService);
   const parkingSiteList = useSelector((state: carmeleonState) => state.parkingSites);
   const chargingSpotList = useSelector((state: carmeleonState) => state.chargingSpots);
@@ -107,25 +117,46 @@ const MapMarker = ({ area }: { area: AreaInterface }) => {
       color: '#000',
     };
   };
+  const serviceMarkerList = getServiceMarkerList(selectedService).filter(marker => {
+    return (
+      marker['lat'] > area.minLat &&
+      marker['lat'] < area.maxLat &&
+      marker['lon'] > area.minLon &&
+      marker['lon'] < area.maxLon
+    );
+  });
+
+  const ClusteredMarker = () => {
+    return serviceMarkerList.length > 0 ? (
+      <Marker
+        // pinColor={getMarkerColor(selectedService)}
+        coordinate={{ latitude: (area.minLat + area.maxLat) / 2, longitude: (area.minLon + area.maxLon) / 2 }}
+        caption={{ text: `${serviceMarkerList.length}`, align: Align.Center }}
+        onClick={() => {
+          setZoomLevel(zoomLevel + 1);
+          setCenterPoint({ latitude: (area.minLat + area.maxLat) / 2, longitude: (area.minLon + area.maxLon) / 2 });
+        }}
+      />
+    ) : (
+      <></>
+    );
+  };
   return (
     <>
-      {getServiceMarkerList(selectedService)
-        .filter(marker => {
+      {zoomLevel < 15 ? (
+        <ClusteredMarker />
+      ) : (
+        serviceMarkerList.map((marker, i: number) => {
           return (
-            marker['lat'] > area.minLat &&
-            marker['lat'] < area.maxLat &&
-            marker['lon'] > area.minLon &&
-            marker['lon'] < area.maxLon
+            <Marker
+              key={i}
+              pinColor={getMarkerColor(selectedService)}
+              coordinate={{ latitude: marker['lat'], longitude: marker['lon'] }}
+              caption={getMarkerCaption(marker)}
+            />
           );
         })
-        .map((marker, i: number) => (
-          <Marker
-            key={i}
-            pinColor={getMarkerColor(selectedService)}
-            coordinate={{ latitude: marker['lat'], longitude: marker['lon'] }}
-            caption={getMarkerCaption(marker)}
-          />
-        ))}
+      )}
     </>
   );
 };
