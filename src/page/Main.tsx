@@ -4,11 +4,12 @@ import { View } from 'react-native';
 import TitleBar from '../components/TitleBar';
 import ServiceList from '../components/ServiceList';
 import NaverMap from '../components/NaverMap';
-import { carWashSpots, chargingSpots, gasStations, parkingSites, ServiceEnum } from '../redux/slice';
+import { carWashSpots, chargingSpots, gasStations, isAuthenticated, parkingSites, ServiceEnum } from '../redux/slice';
 import axiosClient from '../api/interceptor';
 import { useDispatch } from 'react-redux';
 import { carmeleonDispatch } from '../redux/store';
 import { MarkerPointInterface } from '../interfaces/marker';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const MainComponent = () => {
   const serviceKeys: ServiceEnum[] = [
@@ -18,6 +19,13 @@ const MainComponent = () => {
     ServiceEnum.chargingSpot,
   ];
   const dispatch = useDispatch<carmeleonDispatch>();
+  AsyncStorage.getItem('isAuthenticated')
+    .then(key => {
+      dispatch(isAuthenticated(!!key));
+    })
+    .catch(e => {
+      console.log(e);
+    });
   useEffect(() => {
     serviceKeys.forEach(service => {
       loadMarkers(service)
@@ -28,7 +36,7 @@ const MainComponent = () => {
           console.log(e);
         });
     });
-  });
+  }, []);
   return (
     <View>
       <TitleBar />

@@ -22,6 +22,7 @@ export const enum FuelEnum {
 }
 
 const initialState: InitialStateInterface = {
+  isAuthenticated: false,
   carWashSpots: [],
   chargingSpots: [],
   gasStations: [],
@@ -34,6 +35,9 @@ export const carmeleonSlice = createSlice({
   name: 'carmeleonSlice',
   initialState: initialState,
   reducers: {
+    isAuthenticated: (state, action: PayloadAction<boolean>) => {
+      state.isAuthenticated = action.payload;
+    },
     carWashSpots: (state, action: PayloadAction<CarWashMarkerInterface[]>) => {
       state.carWashSpots = action.payload;
     },
@@ -58,13 +62,22 @@ export const carmeleonSlice = createSlice({
   },
 });
 
-export const { carWashSpots, chargingSpots, gasStations, parkingSites, centerPoint, selectedService, selectedFuel } =
-  carmeleonSlice.actions;
+export const {
+  carWashSpots,
+  chargingSpots,
+  gasStations,
+  parkingSites,
+  centerPoint,
+  selectedService,
+  selectedFuel,
+  isAuthenticated,
+} = carmeleonSlice.actions;
 
 export type carmeleonReducers = ReturnType<typeof carmeleonSlice.reducer>;
 export default carmeleonSlice.reducer;
 
 interface InitialStateInterface {
+  isAuthenticated: boolean;
   parkingSites: ParkingSiteMarkerInterface[];
   chargingSpots: EvChargerMarkerInterface[];
   carWashSpots: CarWashMarkerInterface[];

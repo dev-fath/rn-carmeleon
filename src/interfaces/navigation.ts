@@ -4,6 +4,8 @@ import { RouteProp } from '@react-navigation/native';
 export type RootStackParamList = {
   Home: undefined;
   Menu: { userId: string };
+  Login: undefined;
+  AutoPay: undefined;
 };
 
 export type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
