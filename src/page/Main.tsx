@@ -20,7 +20,7 @@ const MainComponent = () => {
   ];
   const dispatch = useDispatch<carmeleonDispatch>();
   AsyncStorage.getItem('isAuthenticated')
-    .then(key => {
+    .then((key): void => {
       dispatch(isAuthenticated(!!key));
     })
     .catch(e => {

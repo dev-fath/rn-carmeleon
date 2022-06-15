@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Text, View } from 'react-native';
-import BackButton from '../../components/BackButton';
+import BackButton from '../../components/BackButton/BackButton';
 
 const PaymentMethods = () => {
   return (

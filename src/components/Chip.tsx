@@ -1,20 +1,30 @@
 import React from 'react';
 
-import { Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import { ServiceItemInterface } from '../interfaces/serviceItem';
 import { ColorTheme } from '../../assets/colorCodes';
 import { useDispatch } from 'react-redux';
 import { carmeleonDispatch } from '../redux/store';
 import { selectedService } from '../redux/slice';
 
-const Chip = (chipProps: ServiceItemInterface) => {
+interface ChipPropsInterface extends ServiceItemInterface {
+  onPress: () => void;
+}
+
+const Chip = (serviceChipProps: ServiceItemInterface) => {
   const dispatch = useDispatch<carmeleonDispatch>();
+  const chipProps: ChipPropsInterface = {
+    ...serviceChipProps,
+    onPress: () => {
+      dispatch(selectedService(chipProps.title));
+    },
+  };
+  return <ChipView {...chipProps} />;
+};
+
+const ChipView = (chipProps: ChipPropsInterface) => {
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        dispatch(selectedService(chipProps.title));
-      }}
-    >
+    <Pressable onPress={chipProps.onPress}>
       <View
         style={{
           backgroundColor: ColorTheme.white,
@@ -32,7 +42,7 @@ const Chip = (chipProps: ServiceItemInterface) => {
         <Text>{chipProps.iconName}</Text>
         <Text>{chipProps.name}</Text>
       </View>
-    </TouchableWithoutFeedback>
+    </Pressable>
   );
 };
 export default Chip;
