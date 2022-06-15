@@ -11,22 +11,32 @@ import { DefaultScreenNavigationProp } from '../../interfaces/navigation';
 const LogoutButton = () => {
   const dispatch = useDispatch<carmeleonDispatch>();
   const navigation: DefaultScreenNavigationProp = useNavigation();
+
+  const logoutButtonProps = {
+    onPress: () => {
+      AsyncStorage.removeItem('isAuthenticated')
+        .then(() => {
+          dispatch(isAuthenticated(false));
+          navigation.popToTop();
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+  };
+  return <LogoutButtonVAComponent {...logoutButtonProps} />;
+};
+
+const LogoutButtonVAComponent = (props: LogoutButtonPropsInterface) => {
   return (
-    <Pressable
-      onPress={() => {
-        AsyncStorage.removeItem('isAuthenticated')
-          .then(() => {
-            dispatch(isAuthenticated(false));
-            navigation.popToTop();
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      }}
-    >
+    <Pressable onPress={props.onPress}>
       <Text>로그아웃</Text>
     </Pressable>
   );
 };
+
+interface LogoutButtonPropsInterface {
+  onPress: () => void;
+}
 
 export default LogoutButton;

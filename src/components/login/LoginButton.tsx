@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Text, TouchableOpacity } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import { LoginMethodInterface } from '../../interfaces/login';
 import AsyncStorage from '@react-native-community/async-storage';
 import { DefaultScreenNavigationProp } from '../../interfaces/navigation';
@@ -9,46 +9,55 @@ import { useDispatch } from 'react-redux';
 import { carmeleonDispatch } from '../../redux/store';
 import { isAuthenticated } from '../../redux/slice';
 
-const LoginButton = ({ backgroundColor, fontColor, code, name }: LoginMethodInterface) => {
+interface LoginButtonPropsInterface extends LoginMethodInterface {
+  onPress: () => void;
+}
+
+const LoginButton = (props: LoginMethodInterface) => {
   const navigation: DefaultScreenNavigationProp = useNavigation();
   const dispatch = useDispatch<carmeleonDispatch>();
-  return (
-    <>
-      <TouchableOpacity
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '80%',
-          height: 48,
-          marginBottom: 8,
-          borderRadius: 8,
-          backgroundColor: backgroundColor,
-        }}
-        onPress={() => {
-          let isAuth = false;
-          AsyncStorage.setItem('isAuthenticated', 'authKey')
-            .then(() => {
-              console.log(code);
-              isAuth = true;
-            })
-            .catch(e => {
-              console.log(e);
-            })
-            .finally(() => {
-              dispatch(isAuthenticated(isAuth));
-              if (isAuth) {
-                navigation.navigate('Home');
-              }
-            });
-        }}
-      >
-        <Text style={{ color: fontColor }}>
-          <Text style={{ fontWeight: 'bold' }}>{name}</Text>로 계속하기
-        </Text>
-      </TouchableOpacity>
-    </>
-  );
+  const loginButtonProps: LoginButtonPropsInterface = {
+    ...props,
+    onPress: () => {
+      let isAuth = false;
+      AsyncStorage.setItem('isAuthenticated', 'authKey')
+        .then(() => {
+          console.log(props.code);
+          isAuth = true;
+        })
+        .catch(e => {
+          console.log(e);
+        })
+        .finally(() => {
+          dispatch(isAuthenticated(isAuth));
+          if (isAuth) {
+            navigation.navigate('Home');
+          }
+        });
+    },
+  };
+  return <LoginButtonVAComponent {...loginButtonProps} />;
 };
 
+const LoginButtonVAComponent = (props: LoginButtonPropsInterface) => {
+  return (
+    <Pressable
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '80%',
+        height: 48,
+        marginBottom: 8,
+        borderRadius: 8,
+        backgroundColor: props.backgroundColor,
+      }}
+      onPress={props.onPress}
+    >
+      <Text style={{ color: props.fontColor }}>
+        <Text style={{ fontWeight: 'bold' }}>{props.name}</Text>로 계속하기
+      </Text>
+    </Pressable>
+  );
+};
 export default LoginButton;

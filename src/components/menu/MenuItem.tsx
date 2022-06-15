@@ -7,34 +7,41 @@ import { MenuItemInterface } from '../../interfaces/menuItem';
 import { useSelector } from 'react-redux';
 import { carmeleonState } from '../../redux/store';
 
-const MenuItem = ({ icon, name, title, needAuth, modalVisible = false, setModalVisible }: MenuItemInterface) => {
+interface MenuItemPropsInterface extends MenuItemInterface {
+  onPress: () => void;
+}
+
+const MenuItem = (props: MenuItemInterface) => {
   const menuNavigation: MenuScreenNavigationProp = useNavigation();
   const isAuthenticated = useSelector((state: carmeleonState) => state.isAuthenticated);
 
-  function navigateOnPress() {
-    console.warn(title);
-    if (needAuth) {
-      if (isAuthenticated) {
-        menuNavigation.navigate(name);
+  const menuItemProps: MenuItemPropsInterface = {
+    ...props,
+    onPress: () => {
+      console.warn(props.title);
+      if (props.needAuth) {
+        if (isAuthenticated) {
+          menuNavigation.navigate(props.name);
+          return;
+        }
+        if (props.setModalVisible) {
+          props.setModalVisible(!props.modalVisible);
+        }
         return;
       }
-      if (setModalVisible) {
-        setModalVisible(!modalVisible);
-      }
-      return;
-    }
-    menuNavigation.navigate(name);
-  }
+      menuNavigation.navigate(props.name);
+    },
+  };
 
+  return <MenuItemVAComponent {...menuItemProps} />;
+};
+
+const MenuItemVAComponent = (props: MenuItemPropsInterface) => {
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        navigateOnPress();
-      }}
-    >
+    <TouchableWithoutFeedback onPress={props.onPress}>
       <View style={{ width: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'center', padding: 16 }}>
-        <Text>{icon}</Text>
-        <Text>{name}</Text>
+        <Text>{props.icon}</Text>
+        <Text>{props.name}</Text>
       </View>
     </TouchableWithoutFeedback>
   );
