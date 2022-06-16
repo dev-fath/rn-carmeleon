@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { SafeAreaView, Text, TouchableWithoutFeedback, View } from 'react-native';
-import MenuButton from './MenuButton';
+import Menu from './buttons/Menu';
 import { ColorTheme } from '../../assets/colorCodes';
 import LoginCheckModal from './LoginCheckModal';
 import { useSelector } from 'react-redux';
@@ -28,7 +28,7 @@ const TitleBar = () => {
           paddingBottom: 16,
         }}
       >
-        <MenuButton />
+        <Menu />
         <Text style={{ color: ColorTheme.white }}>로고</Text>
         <TouchableWithoutFeedback
           onPress={() => {
