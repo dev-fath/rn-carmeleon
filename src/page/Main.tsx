@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { View } from 'react-native';
-import TitleBar from '../components/TitleBar';
+import TitleBar from '../components/title-bar/TitleBar';
 import ServiceList from '../components/service-list/ServiceList';
 import NaverMap from '../components/navermap/NaverMap';
 import { carWashSpots, chargingSpots, gasStations, isAuthenticated, parkingSites, ServiceEnum } from '../redux/slice';
