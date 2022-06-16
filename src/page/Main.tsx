@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import TitleBar from '../components/TitleBar';
 import ServiceList from '../components/ServiceList';
-import NaverMap from '../components/NaverMap';
+import NaverMap from '../components/navermap/NaverMap';
 import { carWashSpots, chargingSpots, gasStations, isAuthenticated, parkingSites, ServiceEnum } from '../redux/slice';
 import axiosClient from '../api/interceptor';
 import { useDispatch } from 'react-redux';
