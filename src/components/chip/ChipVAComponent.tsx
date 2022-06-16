@@ -3,7 +3,7 @@ import { ColorTheme } from '../../../assets/colorCodes';
 import React from 'react';
 import { ChipPropsInterface } from './chip.interface';
 
-const ChipView = (chipProps: ChipPropsInterface) => {
+const ChipVAComponent = (chipProps: ChipPropsInterface) => {
   return (
     <Pressable onPress={chipProps.onPress}>
       <View
@@ -27,4 +27,4 @@ const ChipView = (chipProps: ChipPropsInterface) => {
   );
 };
 
-export default ChipView;
+export default ChipVAComponent;
