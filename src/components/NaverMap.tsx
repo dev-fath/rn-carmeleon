@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 
 import NaverMapView from 'react-native-nmap/index';
 import { Dimensions } from 'react-native';
-import MapMarker from './MapMarker';
+import MapMarker from './marker/pin/MapMarker';
 import { AreaInterface } from '../interfaces/marker';
 import { Coord } from 'react-native-nmap';
 import { setMarkerArea } from '../util/navermap/getMarkerArea';

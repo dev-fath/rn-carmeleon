@@ -1,3 +1,5 @@
+import { Align } from 'react-native-nmap';
+
 export interface MarkerPointInterface {
   isRecommend: boolean;
   lat: number;
@@ -48,3 +50,21 @@ export interface AreaInterface {
   minLon: number;
   maxLon: number;
 }
+
+export interface MarkerCaptionInterface {
+  text?: string;
+  align?: Align;
+  textSize?: number;
+  color?: string;
+  haloColor?: string;
+  offset?: number;
+  requestedWidth?: number;
+  minZoom?: number;
+  maxZoom?: number;
+}
+
+export type MarkerTypesUnion =
+  | ParkingSiteMarkerInterface
+  | EvChargerMarkerInterface
+  | GasStationMarkerInterface
+  | CarWashMarkerInterface;
