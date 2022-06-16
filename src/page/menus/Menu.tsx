@@ -3,7 +3,7 @@ import React from 'react';
 import { Pressable, SafeAreaView, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ColorTheme } from '../../../assets/colorCodes';
-import MenuList from '../../components/menu/MenuList';
+import List from '../../components/menu/List';
 import { DefaultScreenNavigationProp, MenuScreenNavigationProp } from '../../interfaces/navigation';
 import { useSelector } from 'react-redux';
 import { carmeleonState } from '../../redux/store';
@@ -51,7 +51,7 @@ const Menu = () => {
           )}
         </View>
       </SafeAreaView>
-      <MenuList />
+      <List />
     </>
   );
 };
