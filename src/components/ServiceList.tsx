@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SafeAreaView, View } from 'react-native';
-import Chip from './Chip';
+import Chip from './chip/Chip';
 import { ColorTheme } from '../../assets/colorCodes';
 import { ServiceItemInterface } from '../interfaces/serviceItem';
 import { ServiceEnum } from '../redux/slice';
