@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import Item from './Item';
-import LoginCheckModal from '../LoginCheckModal';
+import LoginCheckModal from '../login-check-modal/LoginCheckModal';
 import React from 'react';
 import { ListViewPropsInterface } from './interfaces';
 

@@ -2,11 +2,42 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 import { Alert, Modal, Pressable, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { DefaultScreenNavigationProp } from '../interfaces/navigation';
-import { ColorTheme } from '../../assets/colorCodes';
+import { DefaultScreenNavigationProp } from '../../interfaces/navigation';
+import { ColorTheme } from '../../../assets/colorCodes';
+
+interface LoginCheckModalPropsInterface {
+  modalProps: {
+    visible: boolean;
+    transparent: boolean;
+    animationType: 'none' | 'slide' | 'fade' | undefined;
+    onModalClose: () => void;
+  };
+  onPressCancel: () => void;
+  onPressLogin: () => void;
+}
 
 const LoginCheckModal = (props: { modalVisible: boolean; setModalVisible: Dispatch<SetStateAction<boolean>> }) => {
   const navigate: DefaultScreenNavigationProp = useNavigation();
+  const loginCheckModalProps: LoginCheckModalPropsInterface = {
+    modalProps: {
+      visible: props.modalVisible,
+      transparent: true,
+      animationType: 'slide',
+      onModalClose: () => {
+        Alert.alert('Modal has been closed.');
+        props.setModalVisible(!props.modalVisible);
+      },
+    },
+    onPressCancel: () => props.setModalVisible(!props.modalVisible),
+    onPressLogin: () => {
+      props.setModalVisible(!props.modalVisible);
+      navigate.navigate('Login');
+    },
+  };
+  return <LoginCheckModalVAComponent {...loginCheckModalProps} />;
+};
+
+const LoginCheckModalVAComponent = (props: LoginCheckModalPropsInterface) => {
   return (
     <View
       style={{
@@ -16,16 +47,7 @@ const LoginCheckModal = (props: { modalVisible: boolean; setModalVisible: Dispat
         // marginTop: 22,
       }}
     >
-      <Modal
-        style={{ height: '50%', width: '50%', backgroundColor: '#d00' }}
-        animationType="slide"
-        transparent={true}
-        visible={props.modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          props.setModalVisible(!props.modalVisible);
-        }}
-      >
+      <Modal style={{ height: '50%', width: '50%', backgroundColor: '#d00' }} {...props.modalProps}>
         <View
           style={{
             flex: 1,
@@ -69,7 +91,7 @@ const LoginCheckModal = (props: { modalVisible: boolean; setModalVisible: Dispat
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                onPress={() => props.setModalVisible(!props.modalVisible)}
+                onPress={props.onPressCancel}
               >
                 <Text>취소</Text>
               </Pressable>
@@ -84,10 +106,7 @@ const LoginCheckModal = (props: { modalVisible: boolean; setModalVisible: Dispat
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                onPress={() => {
-                  props.setModalVisible(!props.modalVisible);
-                  navigate.navigate('Login');
-                }}
+                onPress={props.onPressLogin}
               >
                 <Text style={{ color: ColorTheme.white }}>로그인하기</Text>
               </Pressable>

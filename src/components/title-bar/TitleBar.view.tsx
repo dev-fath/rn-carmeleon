@@ -1,7 +1,7 @@
 import { Pressable, SafeAreaView, Text, View } from 'react-native';
 import { ColorTheme } from '../../../assets/colorCodes';
 import Menu from '../buttons/Menu';
-import LoginCheckModal from '../LoginCheckModal';
+import LoginCheckModal from '../login-check-modal/LoginCheckModal';
 import React from 'react';
 import { TitleBarViewPropsInterface } from './title-bar.interface';
 
