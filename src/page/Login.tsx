@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../components/BackButton';
 import { ColorTheme, OtherServiceColorTheme } from '../../assets/colorCodes';
 import { LoginMethodInterface } from '../interfaces/login';
-import LoginButton from '../components/login/LoginButton';
+import Login from '../components/buttons/Login';
 
 const LoginPage = () => {
   const loginMethod: LoginMethodInterface[] = [
@@ -39,7 +39,7 @@ const LoginPage = () => {
           </Text>
           {loginMethod.map(method => {
             return (
-              <LoginButton
+              <Login
                 key={method.code}
                 name={method.name}
                 code={method.code}

@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { Text, View } from 'react-native';
-import BackButton from '../../components/BackButton/BackButton';
+import Back from '../../components/buttons/Back';
 
 const PaymentMethods = () => {
   return (
     <View>
-      <BackButton />
+      <Back />
       <Text>결제관리</Text>
     </View>
   );

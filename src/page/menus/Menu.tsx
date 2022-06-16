@@ -7,7 +7,7 @@ import MenuList from '../../components/menu/MenuList';
 import { DefaultScreenNavigationProp, MenuScreenNavigationProp } from '../../interfaces/navigation';
 import { useSelector } from 'react-redux';
 import { carmeleonState } from '../../redux/store';
-import LogoutButton from '../../components/login/LogoutButton';
+import Logout from '../../components/buttons/Logout';
 
 const Menu = () => {
   const menuNavigation: MenuScreenNavigationProp = useNavigation();
@@ -35,7 +35,7 @@ const Menu = () => {
           {isAuthenticated ? (
             <View>
               <Text>프로필</Text>
-              <LogoutButton />
+              <Logout />
             </View>
           ) : (
             <>
