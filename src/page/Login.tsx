@@ -2,10 +2,10 @@ import React from 'react';
 
 import { SafeAreaView, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import BackButton from '../components/BackButton';
 import { ColorTheme, OtherServiceColorTheme } from '../../assets/colorCodes';
 import { LoginMethodInterface } from '../interfaces/login';
-import LoginButton from '../components/login/LoginButton';
+import Login from '../components/buttons/Login';
+import Back from '../components/buttons/Back';
 
 const LoginPage = () => {
   const loginMethod: LoginMethodInterface[] = [
@@ -28,7 +28,7 @@ const LoginPage = () => {
         start={{ x: 3.25, y: 0.75 }}
         end={{ x: 1, y: 2.25 }}
       >
-        <BackButton />
+        <Back />
         <View style={{ marginLeft: 32 }}>
           <Text style={{ color: ColorTheme.white, fontSize: 20 }}>첫 로그인 접속하시면</Text>
           <Text style={{ color: ColorTheme.white, fontSize: 20, fontWeight: 'bold' }}>100 포인트.</Text>
@@ -39,7 +39,7 @@ const LoginPage = () => {
           </Text>
           {loginMethod.map(method => {
             return (
-              <LoginButton
+              <Login
                 key={method.code}
                 name={method.name}
                 code={method.code}

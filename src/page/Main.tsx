@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 
 import { View } from 'react-native';
-import TitleBar from '../components/TitleBar';
-import ServiceList from '../components/ServiceList';
-import NaverMap from '../components/NaverMap';
+import TitleBar from '../components/title-bar/TitleBar';
+import ServiceList from '../components/service-list/ServiceList';
+import NaverMap from '../components/navermap/NaverMap';
 import { carWashSpots, chargingSpots, gasStations, isAuthenticated, parkingSites, ServiceEnum } from '../redux/slice';
 import axiosClient from '../api/interceptor';
 import { useDispatch } from 'react-redux';
@@ -20,7 +20,7 @@ const MainComponent = () => {
   ];
   const dispatch = useDispatch<carmeleonDispatch>();
   AsyncStorage.getItem('isAuthenticated')
-    .then(key => {
+    .then((key): void => {
       dispatch(isAuthenticated(!!key));
     })
     .catch(e => {

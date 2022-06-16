@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 
-import { View } from 'react-native';
-import MenuItem from './MenuItem';
 import { MenuItemInterface } from '../../interfaces/menuItem';
-import LoginCheckModal from '../LoginCheckModal';
+import { ListViewPropsInterface } from './interfaces';
+import ListVAComponent from './List.view';
 
-const MenuList = () => {
+const List = () => {
   const menuList: MenuItemInterface[] = [
     { icon: '아이콘', name: 'Payment', title: '결제관리', needAuth: true },
     { icon: '아이콘', name: 'Car', title: '차량관리', needAuth: true },
@@ -20,22 +19,12 @@ const MenuList = () => {
   ];
 
   const [modalVisible, setModalVisible] = useState(false);
-  return (
-    <View
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        marginTop: 16,
-      }}
-    >
-      {menuList.map(menu => {
-        return <MenuItem key={menu.name} {...menu} modalVisible={modalVisible} setModalVisible={setModalVisible} />;
-      })}
-      <LoginCheckModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
-    </View>
-  );
-};
 
-export default MenuList;
+  const listViewProps: ListViewPropsInterface = {
+    menuList,
+    modalVisible,
+    setModalVisible,
+  };
+  return <ListVAComponent {...listViewProps} />;
+};
+export default List;
